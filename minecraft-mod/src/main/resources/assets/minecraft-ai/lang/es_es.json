@@ -1,5 +1,0 @@
-{
-  "text.autoconfig.minecraft-ai.title": "Configuración de Minecraft AI",
-  "text.autoconfig.minecraft-ai.option.apiKey": "Clave API del Mod",
-  "text.autoconfig.minecraft-ai.option.apiEndpoint": "Endpoint del Backend de IA"
-}

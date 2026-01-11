@@ -1,0 +1,23 @@
+{
+  "key.categories.minecraftai": "Minecraft AI",
+  "key.minecraftai.open_chat": "Open AI Chat",
+  "key.minecraftai.open_scratchpad": "Open Scratch Pad",
+  "key.minecraftai.toggle_chat_overlay": "Toggle Chat Overlay",
+  "key.minecraftai.toggle_scratchpad_overlay": "Toggle Scratch Pad Overlay",
+  "key.minecraftai.hide_all_overlays": "Hide All Overlays",
+
+  "screen.minecraftai.chat": "AI Chat",
+  "screen.minecraftai.chat.title": "AI Assistant",
+  "screen.minecraftai.chat.new": "New",
+  "screen.minecraftai.chat.history": "History",
+  "screen.minecraftai.chat.conversations": "Conversations",
+  "screen.minecraftai.chat.placeholder": "Type your message...",
+  "screen.minecraftai.chat.send": "Send",
+
+  "screen.minecraftai.scratchpad": "Scratch Pad",
+  "screen.minecraftai.scratchpad.title": "Scratch Pad",
+  "screen.minecraftai.scratchpad.placeholder": "Write your notes here...\n\nThe AI can also read and write to this scratch pad.",
+  "screen.minecraftai.scratchpad.save": "Save",
+  "screen.minecraftai.scratchpad.clear": "Clear",
+  "screen.minecraftai.scratchpad.close": "Close"
+}

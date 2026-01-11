@@ -1,5 +1,0 @@
-# Default ruleset enabled
-default: true
-
-# MD013/line-length - Disable line length rule for documentation clarity
-MD013: false

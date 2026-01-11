@@ -1,109 +1,55 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-*.egg-info/
-*.egg
-*.manifest
+# Gradle
+.gradle/
 build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-.Python
-.installed.cfg
+out/
 
-# Virtual Environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-**/.env
-**/.env.*
+# Gradle Wrapper (keep properties, ignore jar)
+gradle/wrapper/gradle-wrapper.jar
 
-# Local Environment Overrides (Keep separate from general .env)
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-docker-compose.override.yml
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
 
-# Testing & Coverage
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-.hypothesis/
-.pytest_cache/
-
-# Type Checking
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# IDEs & Editors
+# VS Code
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.idea/
-*.swp
 
-# Dependency Directories
-node_modules/
+# NeoForge runs
+runs/
+run/
+logs/
 
-# Build Artifacts & Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Generated resources
+src/generated/
 
-# OS generated files
+# OS files
 .DS_Store
 Thumbs.db
 
-# Gradle / Java
-/build/
-*/.gradle/
-/run/
-*.iml
-*.ipr
-*.iws
-*.lockfile
-gradle/wrapper/gradle-wrapper.jar
-# Keep gradlew scripts and properties file:
-# !gradlew
-# !gradlew.bat
-# !gradle/wrapper/gradle-wrapper.properties
-
-# Docker
-.docker/
-
-# Project Specific / Custom
-repomix-output.*
-.cursor/rules_staging/
-
-# Secrets (Ensure these are not committed!)
+# Secrets
+.env
+.env.*
 secrets/
 *.private
 *.key
 
-# Explicitly keep certain files if needed (Example)
-# !important_file.txt
+# Build artifacts
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Cursor
+.cursor/rules_staging/
+
+# Repo tools
+repomix-output.*
+
+# Plugin data (for testing)
+plugins/

@@ -1,5 +1,0 @@
-You are a creative writing assistant. Generate a story idea with a title and premise based on the following input:
-
-{{input}}
-
-The story idea should be original, creative, and engaging. The title should be catchy and the premise should be concise but intriguing.

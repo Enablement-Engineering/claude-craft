@@ -1,154 +1,46 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Open Host Terminal (Outside Container)",
-            "type": "shell",
-            "command": "${command:workbench.action.terminal.openNativeConsole}",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "never"
-            },
-            "detail": "Opens a terminal on the host system outside the dev container."
-        },
-        {
-            "label": "Setup Logfire",
-            "type": "shell",
-            "command": "pat setup-logfire",
-            "problemMatcher": [],
-            "presentation": {
-                "reveal": "always",
-                "panel": "shared",
-                "clear": false
-            },
-            "detail": "Authenticates with Logfire and sets the current project."
-        },
-        {
-            "label": "Run MCP Server",
-            "type": "shell",
-            "command": "pat run-mcp",
-            "problemMatcher": [],
-            "detail": "Runs the MCP (Model Context Protocol) server.",
-            "presentation": {
-                "reveal": "always",
-                "panel": "dedicated",
-                "group": "backend",
-                "clear": true
-            }
-        },
-        {
-            "label": "Run All Servers",
-            "dependsOn": [
-                "Setup Logfire",
-                "Run Dev Server (API)",
-                "Run MCP Server"
-            ],
-            "problemMatcher": [],
-            "detail": "Launches both the REST API and MCP servers with Logfire setup."
-        },
-        {
-            "label": "Run Dev Server (API)",
-            "type": "shell",
-            "command": "pat run --reload",
-            "problemMatcher": [],
-            "detail": "Runs the FastAPI server with hot reload using the CLI.",
-            "presentation": {
-                "reveal": "always",
-                "panel": "dedicated",
-                "group": "backend",
-                "clear": true
-            }
-        },
-        {
-            "label": "Build Mod (Fabric)",
-            "type": "shell",
-            "command": "cd minecraft-mod && ./gradlew build",
-            "group": "build",
-            "presentation": {
-                "reveal": "always",
-                "panel": "dedicated",
-                "clear": true
-            },
-            "problemMatcher": [
-                "$gradle"
-            ],
-            "detail": "Builds the Minecraft Fabric mod JAR file."
-        },
-        {
-            "label": "Build & Deploy Mod (Fabric)",
-            "type": "shell",
-            "command": "source .env > /dev/null 2>&1 || true; cd minecraft-mod && ./gradlew build && if [ -n \"$MINECRAFT_MOD_TARGET_DIR\" ] && [ -d \"$MINECRAFT_MOD_TARGET_DIR\" ]; then echo \"Deploying mod to $MINECRAFT_MOD_TARGET_DIR\"; find build/libs -maxdepth 1 -name 'minecraft-ai-*.jar' ! -name '*-sources.jar' ! -name '*-javadoc.jar' -exec cp {} \"$MINECRAFT_MOD_TARGET_DIR/\" \\; ; echo \"Deployment complete.\"; else echo \"MINECRAFT_MOD_TARGET_DIR not set or invalid, skipping deployment.\"; fi",
-            "options": {
-                "cwd": "${workspaceFolder}"
-            },
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal": "always",
-                "panel": "dedicated",
-                "clear": false
-            },
-            "problemMatcher": []
-        },
-        {
-            "label": "Lint",
-            "type": "shell",
-            "command": "make lint",
-            "group": "test",
-            "problemMatcher": [
-                "$ruff"
-            ],
-            "detail": "Runs Ruff linter and formatter checks using Make."
-        },
-        {
-            "label": "Test",
-            "type": "shell",
-            "command": "make test",
-            "group": {
-                "kind": "test",
-                "isDefault": true
-            },
-            "problemMatcher": [],
-            "detail": "Runs pytest using Make."
-        },
-        {
-            "label": "Validate",
-            "type": "shell",
-            "command": "pat validate",
-            "problemMatcher": [],
-            "detail": "Runs the CLI validation command."
-        },
-        {
-            "label": "Cleanup",
-            "type": "shell",
-            "command": "pat cleanup",
-            "problemMatcher": [],
-            "detail": "Runs the CLI cleanup command."
-        },
-        {
-            "label": "Sync Configs",
-            "type": "shell",
-            "command": "make sync-configs",
-            "problemMatcher": [],
-            "detail": "Runs the configuration synchronization script."
-        },
-        {
-            "label": "Codex: Interactive",
-            "type": "shell",
-            "command": "codex",
-            "presentation": { "reveal": "always", "panel": "shared" },
-            "problemMatcher": [],
-            "detail": "Launch the OpenAI Codex CLI for live coding assistance"
-        },
-        {
-            "label": "Codex: Explain Codebase",
-            "type": "shell",
-            "command": "codex \"explain this codebase to me\"",
-            "presentation": { "reveal": "always", "panel": "shared" },
-            "problemMatcher": [],
-            "detail": "Run Codex once to summarize the current codebase"
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Mod",
+      "type": "shell",
+      "command": "./gradlew build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gradle"],
+      "detail": "Build the Minecraft AI mod JAR"
+    },
+    {
+      "label": "Run Client",
+      "type": "shell",
+      "command": "./gradlew runClient",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Run Minecraft client with mod loaded"
+    },
+    {
+      "label": "Run Server",
+      "type": "shell",
+      "command": "./gradlew runServer",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Run Minecraft server with mod loaded"
+    },
+    {
+      "label": "Clean",
+      "type": "shell",
+      "command": "./gradlew clean",
+      "problemMatcher": [],
+      "detail": "Clean build artifacts"
+    },
+    {
+      "label": "Refresh Dependencies",
+      "type": "shell",
+      "command": "./gradlew --refresh-dependencies",
+      "problemMatcher": [],
+      "detail": "Force refresh all dependencies"
+    }
+  ]
 }

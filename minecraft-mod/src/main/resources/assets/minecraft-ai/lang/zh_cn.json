@@ -1,5 +1,0 @@
-{
-  "text.autoconfig.minecraft-ai.title": "Minecraft AI 配置",
-  "text.autoconfig.minecraft-ai.option.apiKey": "模组 API 密钥",
-  "text.autoconfig.minecraft-ai.option.apiEndpoint": "AI 后端端点"
-}
