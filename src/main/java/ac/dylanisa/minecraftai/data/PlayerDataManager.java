@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
+import java.nio.file.AtomicMoveNotSupportedException;
 import java.util.UUID;
 
 /**
@@ -189,9 +190,23 @@ public class PlayerDataManager {
         // Timestamp
         state.addProperty("updated_at", java.time.Instant.now().toString());
 
-        // Write state file
+        // Write state file atomically (write to temp, then rename)
+        // This prevents Claude from reading a partially-written file
         Path stateFile = playerDir.resolve("state.json");
-        Files.writeString(stateFile, GSON.toJson(state));
+        Path tempFile = playerDir.resolve("state.json.tmp");
+
+        Files.writeString(tempFile, GSON.toJson(state),
+            StandardOpenOption.CREATE,
+            StandardOpenOption.TRUNCATE_EXISTING);
+
+        try {
+            Files.move(tempFile, stateFile,
+                StandardCopyOption.REPLACE_EXISTING,
+                StandardCopyOption.ATOMIC_MOVE);
+        } catch (AtomicMoveNotSupportedException e) {
+            // Fallback to non-atomic move (still better than direct write)
+            Files.move(tempFile, stateFile, StandardCopyOption.REPLACE_EXISTING);
+        }
     }
 
     private JsonObject serializeInventory(Inventory inventory) {

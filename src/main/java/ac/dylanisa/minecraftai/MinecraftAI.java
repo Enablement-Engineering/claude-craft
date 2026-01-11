@@ -84,6 +84,20 @@ public class MinecraftAI {
     }
 
     @SubscribeEvent
+    public void onPlayerLeave(PlayerEvent.PlayerLoggedOutEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) {
+            return;
+        }
+
+        java.util.UUID playerUuid = player.getUUID();
+        LOGGER.info("Player {} disconnected, cleaning up AI resources...",
+            player.getName().getString());
+
+        // Clean up session manager state and cancel active processes
+        ac.dylanisa.minecraftai.network.ChatSessionManager.onPlayerDisconnect(playerUuid);
+    }
+
+    @SubscribeEvent
     public void onServerTick(ServerTickEvent.Post event) {
         tickCounter++;
         if (tickCounter < STATE_UPDATE_INTERVAL) {

@@ -63,6 +63,7 @@ public class ClaudeProcess {
     ) {
         return CompletableFuture.supplyAsync(() -> {
             MinecraftAI.LOGGER.info("ClaudeProcess.run() async block started");
+            Process process = null;  // Declare outside try for finally block access
             try {
                 List<String> command = buildCommand(prompt);
                 MinecraftAI.LOGGER.info("Built command: {}", String.join(" ", command));
@@ -80,7 +81,11 @@ public class ClaudeProcess {
                 pb.environment().put("CI", "true");    // Signal non-interactive environment
 
                 MinecraftAI.LOGGER.info("Starting Claude process in: {}", workingDirectory);
-                Process process = pb.start();
+                process = pb.start();
+
+                // Register process for tracking (enables cancellation on disconnect)
+                ClaudeProcessTracker.register(playerUuid, process);
+
                 MinecraftAI.LOGGER.info("Claude process started with PID: {}", process.pid());
 
                 // Close stdin immediately - we're using -p flag so no input needed
@@ -161,6 +166,11 @@ public class ClaudeProcess {
                     onError.accept(e);
                 }
                 throw new RuntimeException(e);
+            } finally {
+                // Always unregister the process when done (success or failure)
+                if (process != null) {
+                    ClaudeProcessTracker.unregister(playerUuid, process);
+                }
             }
         });
     }

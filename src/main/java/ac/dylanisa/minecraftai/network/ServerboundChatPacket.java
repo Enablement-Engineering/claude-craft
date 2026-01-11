@@ -2,6 +2,7 @@ package ac.dylanisa.minecraftai.network;
 
 import ac.dylanisa.minecraftai.MinecraftAI;
 import ac.dylanisa.minecraftai.claude.ClaudeProcess;
+import ac.dylanisa.minecraftai.claude.ClaudeProcessTracker;
 import ac.dylanisa.minecraftai.data.PlayerDataManager;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -11,11 +12,19 @@ import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Sent from client to server when player sends a chat message to the AI.
  */
 public record ServerboundChatPacket(String message) implements CustomPacketPayload {
+
+    // Rate limiting: max 1 concurrent process per player, min 2 seconds between messages
+    private static final int MAX_CONCURRENT_PROCESSES = 1;
+    private static final long MIN_MESSAGE_INTERVAL_MS = 2000;
+    private static final Map<UUID, Long> lastMessageTime = new ConcurrentHashMap<>();
 
     public static final CustomPacketPayload.Type<ServerboundChatPacket> TYPE =
         new CustomPacketPayload.Type<>(ModNetworking.id("chat"));
@@ -31,9 +40,40 @@ public record ServerboundChatPacket(String message) implements CustomPacketPaylo
         return TYPE;
     }
 
+    /**
+     * Clean up rate limit tracking for a player (called on disconnect).
+     */
+    public static void cleanupPlayer(UUID playerUuid) {
+        lastMessageTime.remove(playerUuid);
+    }
+
     public static void handle(ServerboundChatPacket packet, IPayloadContext context) {
         // Capture player and data on main thread
         ServerPlayer player = (ServerPlayer) context.player();
+        UUID playerUuid = player.getUUID();
+
+        // Rate limit check: concurrent processes
+        int activeCount = ClaudeProcessTracker.getActiveCount(playerUuid);
+        if (activeCount >= MAX_CONCURRENT_PROCESSES) {
+            MinecraftAI.LOGGER.warn("Player {} rate limited: {} active processes",
+                player.getName().getString(), activeCount);
+            context.reply(new ClientboundChatCompletePacket(false,
+                "Please wait for your current message to complete."));
+            return;
+        }
+
+        // Rate limit check: message interval
+        long now = System.currentTimeMillis();
+        Long lastTime = lastMessageTime.get(playerUuid);
+        if (lastTime != null && (now - lastTime) < MIN_MESSAGE_INTERVAL_MS) {
+            MinecraftAI.LOGGER.warn("Player {} rate limited: message too soon",
+                player.getName().getString());
+            context.reply(new ClientboundChatCompletePacket(false,
+                "Please wait a moment before sending another message."));
+            return;
+        }
+        lastMessageTime.put(playerUuid, now);
+
         PlayerDataManager dataManager = MinecraftAI.getDataManager();
 
         if (dataManager == null) {

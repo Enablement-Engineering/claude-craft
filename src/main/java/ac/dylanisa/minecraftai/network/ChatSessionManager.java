@@ -1,6 +1,7 @@
 package ac.dylanisa.minecraftai.network;
 
 import ac.dylanisa.minecraftai.MinecraftAI;
+import ac.dylanisa.minecraftai.claude.ClaudeProcessTracker;
 import ac.dylanisa.minecraftai.claude.ClaudeSessionReader;
 import ac.dylanisa.minecraftai.data.PlayerDataManager;
 import com.google.gson.Gson;
@@ -261,10 +262,20 @@ public class ChatSessionManager {
     }
 
     /**
-     * Clear cached data when player disconnects.
+     * Clean up when player disconnects.
+     * Cancels any active Claude processes and clears in-memory caches.
      */
     public static void onPlayerDisconnect(UUID playerUuid) {
-        // Keep activeSessions for quick resume on reconnect
-        // Session list is persisted to disk
+        MinecraftAI.LOGGER.info("Cleaning up sessions for player {}", playerUuid);
+
+        // Cancel any active Claude processes for this player
+        ClaudeProcessTracker.cancelPlayerProcesses(playerUuid);
+
+        // Clear rate limit tracking
+        ServerboundChatPacket.cleanupPlayer(playerUuid);
+
+        // Clear in-memory caches (data is persisted to disk)
+        activeSessions.remove(playerUuid);
+        playerSessionIds.remove(playerUuid);
     }
 }
