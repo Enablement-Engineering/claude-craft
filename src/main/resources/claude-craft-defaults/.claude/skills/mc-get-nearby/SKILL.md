@@ -1,7 +1,7 @@
 ---
 name: mc-get-nearby
 description: Get nearby blocks and entities around the player in Minecraft. Use when asked about surroundings, what's nearby, mobs, or blocks around the player.
-allowed-tools: Read
+allowed-tools: Glob,Read
 ---
 
 # Get Nearby Blocks and Entities
@@ -10,12 +10,8 @@ Read the player's state file to get information about their surroundings.
 
 ## Instructions
 
-The player's UUID is available in the MINECRAFT_PLAYER_UUID environment variable.
-
-Use the Read tool to read the state file. The path is:
-`players/<player-uuid>/state.json`
-
-Replace `<player-uuid>` with the value from the MINECRAFT_PLAYER_UUID environment variable.
+1. Use Glob with pattern `players/*/state.json` to find the state file
+2. Read the state.json file that Glob finds
 
 ## Nearby Fields
 

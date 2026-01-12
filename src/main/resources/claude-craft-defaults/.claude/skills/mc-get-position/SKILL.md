@@ -1,7 +1,7 @@
 ---
 name: mc-get-position
 description: Get the player's current position, coordinates, location, dimension, and facing direction in Minecraft. Use when asked about where the player is, their coords, or location.
-allowed-tools: Read
+allowed-tools: Glob,Read
 ---
 
 # Get Player Position
@@ -10,12 +10,8 @@ Read the player's state file to get their current position.
 
 ## Instructions
 
-The player's UUID is available in the MINECRAFT_PLAYER_UUID environment variable.
-
-Use the Read tool to read the state file. The path is:
-`players/<player-uuid>/state.json`
-
-Replace `<player-uuid>` with the value from the MINECRAFT_PLAYER_UUID environment variable.
+1. Use Glob with pattern `players/*/state.json` to find the state file
+2. Read the state.json file that Glob finds
 
 ## Position Fields
 

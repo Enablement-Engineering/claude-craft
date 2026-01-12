@@ -1,7 +1,7 @@
 ---
 name: mc-get-world-info
 description: Get world information like time, weather, difficulty, and server details in Minecraft. Use when asked about time of day, weather conditions, or world settings.
-allowed-tools: Read
+allowed-tools: Glob,Read
 ---
 
 # Get World Information
@@ -10,12 +10,8 @@ Read the player's state file to get world information.
 
 ## Instructions
 
-The player's UUID is available in the MINECRAFT_PLAYER_UUID environment variable.
-
-Use the Read tool to read the state file. The path is:
-`players/<player-uuid>/state.json`
-
-Replace `<player-uuid>` with the value from the MINECRAFT_PLAYER_UUID environment variable.
+1. Use Glob with pattern `players/*/state.json` to find the state file
+2. Read the state.json file that Glob finds
 
 ## World Fields
 
