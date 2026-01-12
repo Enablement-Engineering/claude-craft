@@ -162,7 +162,3 @@ src/main/resources/
     ├── bin/                   # Shell scripts for skills
     └── player-template/       # Template for new players
 ```
-
-## Plan Reference
-
-See `PLAN.md` for the full implementation plan and phase breakdown.
