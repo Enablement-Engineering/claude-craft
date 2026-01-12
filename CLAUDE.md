@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Minecraft AI is a NeoForge mod that integrates Claude Code (headless mode) directly into Minecraft. Players can chat with an AI assistant that has access to game state and can save notes, plans, and memories.
+Claude Craft is a NeoForge mod that integrates Claude Code (headless mode) directly into Minecraft. Players can chat with an AI assistant that has access to game state and can save notes, plans, and memories.
 
 **Tech Stack:**
 - Minecraft 1.21.1
@@ -31,7 +31,7 @@ Minecraft AI is a NeoForge mod that integrates Claude Code (headless mode) direc
 ```bash
 # Build the mod (requires Java 21)
 ./gradlew build
-# Output: build/libs/minecraftai-*.jar
+# Output: build/libs/claudecraft-*.jar
 
 # Run Minecraft client with mod loaded
 ./gradlew runClient
@@ -76,9 +76,9 @@ Minecraft AI is a NeoForge mod that integrates Claude Code (headless mode) direc
 
 ### Key Components
 
-- `src/main/java/ac/dylanisa/minecraftai/MinecraftAI.java` - Mod entry point
+- `src/main/java/engineering/enablement/claudecraft/ClaudeCraft.java` - Mod entry point
 - `src/main/resources/META-INF/neoforge.mods.toml` - Mod metadata
-- `plugins/minecraft-ai/` - Runtime data directory (created by mod)
+- `plugins/claude-craft/` - Runtime data directory (created by mod)
   - `.claude/` - Claude Code skills and hooks
   - `players/{uuid}/` - Per-player files (CLAUDE.md, scratch.md, notes/)
 
@@ -97,7 +97,7 @@ Environment variables passed:
 
 ### Skills (Minecraft Tools)
 
-Located in `plugins/minecraft-ai/.claude/skills/`:
+Located in `plugins/claude-craft/.claude/skills/`:
 - `mc-get-position/` - Get player coordinates
 - `mc-get-inventory/` - Get inventory contents
 - `mc-get-nearby/` - Get nearby blocks/entities
@@ -130,10 +130,12 @@ Overlays are managed by `OverlayManager` and rendered via `OverlayRenderer` usin
 ## Project Structure
 
 ```
-src/main/java/ac/dylanisa/minecraftai/
-├── MinecraftAI.java           # Mod entry point
+src/main/java/engineering/enablement/claudecraft/
+├── ClaudeCraft.java           # Mod entry point
 ├── claude/                    # Claude Code integration
 │   ├── ClaudeProcess.java     # Subprocess wrapper
+│   ├── ClaudeProcessTracker.java # Process lifecycle tracking
+│   ├── ClaudeSessionReader.java # Session file parsing
 │   └── ClaudeStreamEvent.java # Stream JSON parsing
 ├── data/
 │   └── PlayerDataManager.java # Player directory & state management
@@ -154,8 +156,8 @@ src/main/java/ac/dylanisa/minecraftai/
 
 src/main/resources/
 ├── META-INF/neoforge.mods.toml
-├── assets/minecraftai/lang/en_us.json  # Translations
-└── minecraft-ai-defaults/     # Default files copied to plugin dir
+├── assets/claudecraft/lang/en_us.json  # Translations
+└── claude-craft-defaults/     # Default files copied to plugin dir
     ├── .claude/               # Skills and hooks
     ├── bin/                   # Shell scripts for skills
     └── player-template/       # Template for new players

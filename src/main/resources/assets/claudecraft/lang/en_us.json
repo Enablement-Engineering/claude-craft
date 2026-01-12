@@ -1,0 +1,23 @@
+{
+  "key.categories.claudecraft": "Claude Craft",
+  "key.claudecraft.open_chat": "Open AI Chat",
+  "key.claudecraft.open_scratchpad": "Open Scratch Pad",
+  "key.claudecraft.toggle_chat_overlay": "Toggle Chat Overlay",
+  "key.claudecraft.toggle_scratchpad_overlay": "Toggle Scratch Pad Overlay",
+  "key.claudecraft.hide_all_overlays": "Hide All Overlays",
+
+  "screen.claudecraft.chat": "AI Chat",
+  "screen.claudecraft.chat.title": "AI Assistant",
+  "screen.claudecraft.chat.new": "New",
+  "screen.claudecraft.chat.history": "History",
+  "screen.claudecraft.chat.conversations": "Conversations",
+  "screen.claudecraft.chat.placeholder": "Type your message...",
+  "screen.claudecraft.chat.send": "Send",
+
+  "screen.claudecraft.scratchpad": "Scratch Pad",
+  "screen.claudecraft.scratchpad.title": "Scratch Pad",
+  "screen.claudecraft.scratchpad.placeholder": "Write your notes here...\n\nThe AI can also read and write to this scratch pad.",
+  "screen.claudecraft.scratchpad.save": "Save",
+  "screen.claudecraft.scratchpad.clear": "Clear",
+  "screen.claudecraft.scratchpad.close": "Close"
+}

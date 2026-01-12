@@ -1,0 +1,3 @@
+From its mechanics to how the game works from a code level gives you very useful perspectives on how to think about the world. It reminds me of liber indigo’s rotating the cube.
+
+Even the community like hermitcraft where they show you how to build incredible worlds with economies and lore, but also messages of whimsy that serves purposes like making sheep infested with slimes and wind charges dropped from a Happy Ghast makes a hilarious slime farm when dropped on a Warden.
