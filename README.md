@@ -2,6 +2,17 @@
 
 A NeoForge mod that integrates Claude Code directly into Minecraft. Chat with an AI assistant that can see your game state, save notes, and help with your adventures.
 
+![Claude Craft in mods list](assets/screenshot7.png)
+
+## Screenshots
+
+| | |
+|---|---|
+| ![Ask about position](assets/screenshot1.png) | ![Save home location](assets/screenshot2.png) |
+| *Ask Claude about your position* | *Save locations to notes* |
+| ![Get directions](assets/screenshot4.png) | ![Scratch pad](assets/screenshot6.png) |
+| *Get directions back home* | *Save info to the scratch pad* |
+
 ## Features
 
 - **In-game AI Chat** - Talk to Claude with streaming responses
